@@ -103,7 +103,7 @@ VASTIntegrator.prototype._selectAdSource = function selectAdSource(response, cal
 
 VASTIntegrator.prototype._createVASTTracker = function createVASTTracker(adMediaFile, response, callback) {
   try {
-    callback(null, adMediaFile, new VASTTracker(adMediaFile.src, response), response);
+    callback(null, adMediaFile, new VASTTracker(adMediaFile.src, response, this.player), response);
   } catch (e) {
     callback(e, response);
   }
@@ -112,6 +112,7 @@ VASTIntegrator.prototype._createVASTTracker = function createVASTTracker(adMedia
 VASTIntegrator.prototype._setupEvents = function setupEvents(adMediaFile, tracker, response, callback) {
   var previouslyMuted;
   var player = this.player;
+  console.log("Setup Events in VastIntegrator");
   player.on('fullscreenchange', trackFullscreenChange);
   player.on('vast.adStart', trackImpressions);
   player.on('pause', trackPause);

@@ -4,12 +4,13 @@ var VASTError = require('./VASTError');
 var VASTResponse = require('./VASTResponse');
 var vastUtil = require('./vastUtil');
 var utilities = require('../../utils/utilityFunctions');
+var playerUtils = require('../../utils/playerUtils');
 
-function VASTTracker(assetURI, vastResponse) {
+function VASTTracker(assetURI, vastResponse, player) {
   if (!(this instanceof VASTTracker)) {
     return new VASTTracker(assetURI, vastResponse);
   }
-
+  this.player = player;
   this.sanityCheck(assetURI, vastResponse);
   this.initialize(assetURI, vastResponse);
 
@@ -42,7 +43,6 @@ VASTTracker.prototype.trackURLs = function trackURLs(urls, variables) {
       ASSETURI: this.assetURI,
       CONTENTPLAYHEAD: vastUtil.formatProgress(this.progress)
     }, variables || {});
-
     vastUtil.track(urls, variables);
   }
 };
@@ -50,6 +50,11 @@ VASTTracker.prototype.trackURLs = function trackURLs(urls, variables) {
 VASTTracker.prototype.trackEvent = function trackEvent(eventName, trackOnce) {
   this.trackURLs(getEventUris(this.response.trackingEvents[eventName]));
   if (trackOnce) {
+    // this.player.o
+    var quartileEvents = ['firstQuartile', "midpoint", "thirdQuartile", "completed"];
+    if(quartileEvents.indexOf(eventName) != -1) {
+      this.player.trigger("vast."+eventName);
+    }
     this.response.trackingEvents[eventName] = undefined;
   }
 
