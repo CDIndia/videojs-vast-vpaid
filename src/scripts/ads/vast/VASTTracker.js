@@ -51,7 +51,7 @@ VASTTracker.prototype.trackEvent = function trackEvent(eventName, trackOnce) {
   this.trackURLs(getEventUris(this.response.trackingEvents[eventName]));
   if (trackOnce) {
     // this.player.o
-    var quartileEvents = ['firstQuartile', "midpoint", "thirdQuartile", "completed"];
+    var quartileEvents = ['firstQuartile', "midpoint", "thirdQuartile", "complete"];
     if(quartileEvents.indexOf(eventName) != -1) {
       this.player.trigger("vast."+eventName);
     }

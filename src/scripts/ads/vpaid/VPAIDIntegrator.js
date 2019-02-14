@@ -238,13 +238,13 @@ VPAIDIntegrator.prototype._initAd = function (adUnit, vastResponse, next) {
   });
 };
 
-VPAIDIntegrator.prototype._createVASTTracker = function(adUnitSrc, vastResponse) {
-  return new VASTTracker(adUnitSrc, vastResponse);
+VPAIDIntegrator.prototype._createVASTTracker = function(adUnitSrc, vastResponse, player) {
+  return new VASTTracker(adUnitSrc, vastResponse, player);
 };
 
 VPAIDIntegrator.prototype._setupEvents = function (adUnit, vastResponse, next) {
   var adUnitSrc = adUnit.options.src;
-  var tracker = this._createVASTTracker(adUnitSrc, vastResponse);
+  var tracker = this._createVASTTracker(adUnitSrc, vastResponse, this.player);
   var player = this.player;
   var that = this;
 
