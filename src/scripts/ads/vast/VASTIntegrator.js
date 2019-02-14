@@ -244,6 +244,7 @@ VASTIntegrator.prototype._addSkipButton = function addSkipButton(source, tracker
 
 VASTIntegrator.prototype._addClickThrough = function addClickThrough(mediaFile, tracker, response, callback) {
   var player = this.player;
+  VASTIntegrator.prototype.response = response;
   var blocker = createClickThroughBlocker(player, tracker, response);
   var updateBlocker = updateBlockerURL.bind(this, blocker, response, player);
 
@@ -332,7 +333,7 @@ VASTIntegrator.prototype._playSelectedAd = function playSelectedAd(source, respo
       logger.debug ("<VASTIntegrator._playSelectedAd/playAd> got playing event; triggering vast.adStart...");
 
       player.trigger('vast.adStart');
-
+      player.vast.clickUrl(VASTIntegrator.prototype.response.clickThrough)
       player.on('ended', proceed);
       player.on('vast.adsCancel', proceed);
       player.on('vast.adSkip', proceed);

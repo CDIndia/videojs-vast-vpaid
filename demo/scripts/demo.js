@@ -90,7 +90,9 @@ dom.onReady(function() {
             }
           }
         };
-
+        adPluginOpts.clickUrl = function(url) {
+          console.log("In demo.js click url ["+url+"]");
+        }
         if (mode === 'TAG') {
           adPluginOpts.plugins["ads-setup"].adTagUrl = tagEl.value;
         } else if (mode === 'XML') {
@@ -114,6 +116,24 @@ dom.onReady(function() {
 
 
         if(player) {
+
+          player.on('vast.firstQuartile', function(evt) {
+            videojs.log("vpaid.firstQuartile");
+          });
+        
+          player.on('vast.midpoint', function(evt) {
+            videojs.log("vpaid.midpoint");
+          });
+        
+          player.on('vast.thirdQuartile', function(evt) {
+            videojs.log("vpaid.thirdQuartile");
+          });
+        
+          player.on('vast.complete', function(evt) {
+            videojs.log("vpaid.complete");
+          });
+
+
           player.on('vast.adStart', function() {
             showPauseBtn();
             player.on('play', showPauseBtn);

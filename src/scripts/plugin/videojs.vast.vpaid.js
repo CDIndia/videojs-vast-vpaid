@@ -110,6 +110,9 @@ module.exports = function VASTPlugin(options) {
 
     disable: function () {
       settings.adsEnabled = false;
+    },
+    clickUrl: function(url) {
+        settings.clickUrl(url)
     }
   };
 

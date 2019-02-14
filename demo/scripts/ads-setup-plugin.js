@@ -2,6 +2,7 @@ var _ = require('./utils');
 var messages = require('./messages');
 
 module.exports = function molVastSetup(opts) {
+ 
   var player = this;
   var options = _.extend({}, this.options_, opts);
 
@@ -19,7 +20,9 @@ module.exports = function molVastSetup(opts) {
   if(options.adTagXML) {
     pluginSettings.adTagXML = options.adTagXML;
   }
-
+  pluginSettings.clickUrl = function(clickUrl) {
+        console.log("Click Url ["+clickUrl+"]");
+  }
   var vastAd = player.vastClient(pluginSettings);
 
   player.on('reset', function () {
