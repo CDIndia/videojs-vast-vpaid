@@ -65,6 +65,14 @@ VASTIntegrator.prototype.playAd = function playAd(vastResponse, callback) {
       that.player.play(true);
     },
 
+    muteAd: function () {
+      that.player.muted(true);
+    },
+
+    unmuteAd: function () {
+      that.player.muted(false);
+    },
+
     isPaused: function () {
       return that.player.paused(true);
     },
@@ -332,8 +340,9 @@ VASTIntegrator.prototype._playSelectedAd = function playSelectedAd(source, respo
 
       logger.debug ("<VASTIntegrator._playSelectedAd/playAd> got playing event; triggering vast.adStart...");
 
+      // player.vast.clickUrl(VASTIntegrator.prototype.response.clickThrough)
+      player.clickUrl = VASTIntegrator.prototype.response.clickThrough;
       player.trigger('vast.adStart');
-      player.vast.clickUrl(VASTIntegrator.prototype.response.clickThrough)
       player.on('ended', proceed);
       player.on('vast.adsCancel', proceed);
       player.on('vast.adSkip', proceed);

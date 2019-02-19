@@ -89,6 +89,17 @@ VPAIDIntegrator.prototype.playAd = function playVPaidAd(vastResponse, callback) 
       resumeAd: function() {
           player.trigger('vpaid.resumeAd');
       },
+
+      muteAd: function () {
+        player.trigger('vpaid.muteAd');
+        player.muted(true);
+      },
+  
+      unmuteAd: function () {
+        player.trigger('vpaid.unmuteAd');
+        player.muted(false);
+      },
+
       isPaused: function() {
         return this._paused;
       },
@@ -490,7 +501,7 @@ VPAIDIntegrator.prototype._linkPlayerControls = function (adUnit, vastResponse, 
     /*** local functions ***/
     function updateAdUnitVolume() {
       var vol = player.muted() ? 0 : player.volume();
-      adUnit.setAdVolume(vol, logError);
+      // adUnit.setAdVolume(vol, logError);
     }
 
     function updatePlayerVolume() {
@@ -523,6 +534,7 @@ VPAIDIntegrator.prototype._startAd = function (adUnit, vastResponse, next) {
   var player = this.player;
 
   adUnit.startAd(function (error) {
+    player.clickUrl = VPAIDIntegrator.prototype.response.clickThrough;
     if (!error) {
       player.trigger('vast.adStart');
     }

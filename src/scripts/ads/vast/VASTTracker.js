@@ -51,7 +51,7 @@ VASTTracker.prototype.trackEvent = function trackEvent(eventName, trackOnce) {
   this.trackURLs(getEventUris(this.response.trackingEvents[eventName]));
   if (trackOnce) {
     // this.player.o
-    var quartileEvents = ['firstQuartile', "midpoint", "thirdQuartile", "complete"];
+    var quartileEvents = ['firstQuartile', "midpoint", "thirdQuartile", "complete", "clickThrough"];
     if(quartileEvents.indexOf(eventName) != -1) {
       this.player.trigger("vast."+eventName);
     }
@@ -223,6 +223,7 @@ VASTTracker.prototype.trackCreativeView = function trackCreativeView() {
 
 VASTTracker.prototype.trackClick = function trackClick() {
   this.trackURLs(this.response.clickTrackings);
+  this.trackEvent('clickThrough', true);
 };
 
 module.exports = VASTTracker;

@@ -20,12 +20,285 @@
     <!-- Web Fonts -->
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
+    <style type="text/css">
+        #mainContainer {
+    position: relative;
+    padding: 0px;
+    margin: 0px;
+    width: ad_width;
+    height: ad_height;
+    background-color: #000000;
+}
+        
+        #contentElement {
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+        
+        #content, #adContainer {
+    position: absolute;
+    padding: 0px;
+    width: ad_width;
+    height: ad_height;
+}
+</style>
 
     <script type="text/javascript">
         // this is mandatory for IE8 !!!!!
         document.createElement('video');
         document.createElement('audio');
         document.createElement('track');
+    </script>
+
+    <script type="text/javascript">
+    window.onload = function(){
+        playAd();
+    
+  /*** Local functions ***/
+  function playAd() {
+    var videoContainer = document.getElementById('adContainer');
+    var player;
+    var mute = true;
+    var adStarted = false;
+
+    
+    updateDemo();
+
+    
+
+    function updateDemo() {
+      createVideoEl(videoContainer, function(videoEl) {
+        var mode = activeMode();
+        var adPluginOpts = {
+          "plugins": {
+            "ads-setup":{
+              "adCancelTimeout":20000,// Wait for ten seconds before canceling the ad.
+              "adsEnabled": true
+            }
+          }
+        };
+        adPluginOpts.clickUrl = function(url) {
+          console.log("In demo.js click url ["+url+"]");
+        }
+          adPluginOpts.plugins["ads-setup"].adTagXML = function(done){
+            //The setTimeout is to simulate asynchrony
+            setTimeout(function () {
+                // done(null, '<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><VAST version=\"2.0\"><Ad id=\"1855\"><InLine><AdSystem>Programatic OpenRTB</AdSystem><AdTitle>General Vast</AdTitle><Creatives><Creative AdID=\"1855\"><Linear><Duration>00:00:38</Duration><TrackingEvents><Tracking event=\"start\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&osrid=83d11999-c7dc-4b13-b103-aa5cbaebf8eb&t=1549891314&pubid=7d95de69cfc7cc03c3a05b4fde9662b8&plmt=0&impid=1&cip=106.212.157.125&adv=3&pkg=1&cid=61&crid=1855&caid=3&b=284035177&c=IND&wh=320x480&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+12_1+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Mobile%2F16B91&carrier=&ct=Faridabad&st=10&z=121002&dma=&bek=4b942dfedeee2e4b394b4d8cd6cb0100_20190211_13&le=0&av=0&lae=0&userid=04E577B7-535A-48DF-BD88-D05A92FE9731&bidid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&ifa=04E577B7-535A-48DF-BD88-D05A92FE9731&ccr=1.0&m=1&act=6]]></Tracking><Tracking event=\"start\"><![CDATA[http://nep.advangelists.com/xp/evt?pp=1Ie8veUtJKPWu0MCQ9vUHWOC9ibZ4HXlXhhwx2teSWHkRhLB9seR7COJnD7wZxbUs7xzbnB8Jm5HPUaxqt8dDPrM6Njmbh8yNnIoFL29uvMdMQZZzT7wtF9QG8SpgWT0B9MdUiTG0IY8oDAKBA3leX7d8U1kX0XqxNc9ILZv1wZwo1Zwopkgw3wBMMpZSjXgyvZV9XW0oXEFf0AHlUCxkWZwuGO37AHQyXjKN7MCXjPK4aewpt9tQ8Kite2o7aSVzyABd4FVxQjM3VUP2vyh9pZkrGJNCad06mGZAIQlm6kWCBndp7foe80Nl3LqvYTFVr8klHdL3jTEk5mOXjPZ7xQo9Ws81pEV4Ivuh5buP4gT0DanAVzTycEkyVlSJGhxBDdtp0gAsnNaRmKcwi1omudysFnZQtrSelYrplSGq7pMugBzFmwNyNmGfL7tdZDASPBH8zdGG8nluvxNLpzH2WcdNzsrWwOqUfawvwqsR7W1BajtUIkNcp9AeX8ZwkizLOia6rhmATbjQT5NYSbSoIIrzG056eXVu5PQzxnRo8PdBMQBsCINvMaI209Z7DtFdweeD2DwgKsBYNP2uAAuPvLJlVGNXKgcVRu1AT0bj20tlkgfeFCPFRrc4eIXhHIlydbtvKPQS4h1lYgsM0SeDvcbRYyZ9PH0eXTkhuW0VnRTb98kooEIpODmwmSMDycGo40uRLTVZ6cuCAT5NbIN6EvPWw3hHSdUKDcBWrMIGuufm7xcAXLiQ3FiDa5F78NnWRY4o7EDDoaojOG0JWj30muw4CuWWlP9o0AmfmYlsEUfobQXYyoigMhDHPanK9MLIoCxn4AYBw4hgieG7cuN68vojTUdufuxeJDWERHjmrTQlA34eb5r41jiIiKmYoybo11f7IqZi7YuPcEXsmlx6YyqEBqMphcS2XqLFpG3XWwTMnk1QD2CIkUuaLxESoTg__]]></Tracking><Tracking event=\"firstQuartile\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&osrid=83d11999-c7dc-4b13-b103-aa5cbaebf8eb&t=1549891314&pubid=7d95de69cfc7cc03c3a05b4fde9662b8&plmt=0&impid=1&cip=106.212.157.125&adv=3&pkg=1&cid=61&crid=1855&caid=3&b=284035177&c=IND&wh=320x480&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+12_1+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Mobile%2F16B91&carrier=&ct=Faridabad&st=10&z=121002&dma=&bek=4b942dfedeee2e4b394b4d8cd6cb0100_20190211_13&le=0&av=0&lae=0&userid=04E577B7-535A-48DF-BD88-D05A92FE9731&bidid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&ifa=04E577B7-535A-48DF-BD88-D05A92FE9731&ccr=1.0&m=1&act=7]]></Tracking><Tracking event=\"midpoint\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&osrid=83d11999-c7dc-4b13-b103-aa5cbaebf8eb&t=1549891314&pubid=7d95de69cfc7cc03c3a05b4fde9662b8&plmt=0&impid=1&cip=106.212.157.125&adv=3&pkg=1&cid=61&crid=1855&caid=3&b=284035177&c=IND&wh=320x480&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+12_1+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Mobile%2F16B91&carrier=&ct=Faridabad&st=10&z=121002&dma=&bek=4b942dfedeee2e4b394b4d8cd6cb0100_20190211_13&le=0&av=0&lae=0&userid=04E577B7-535A-48DF-BD88-D05A92FE9731&bidid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&ifa=04E577B7-535A-48DF-BD88-D05A92FE9731&ccr=1.0&m=1&act=8]]></Tracking><Tracking event=\"thirdQuartile\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&osrid=83d11999-c7dc-4b13-b103-aa5cbaebf8eb&t=1549891314&pubid=7d95de69cfc7cc03c3a05b4fde9662b8&plmt=0&impid=1&cip=106.212.157.125&adv=3&pkg=1&cid=61&crid=1855&caid=3&b=284035177&c=IND&wh=320x480&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+12_1+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Mobile%2F16B91&carrier=&ct=Faridabad&st=10&z=121002&dma=&bek=4b942dfedeee2e4b394b4d8cd6cb0100_20190211_13&le=0&av=0&lae=0&userid=04E577B7-535A-48DF-BD88-D05A92FE9731&bidid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&ifa=04E577B7-535A-48DF-BD88-D05A92FE9731&ccr=1.0&m=1&act=9]]></Tracking><Tracking event=\"complete\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&osrid=83d11999-c7dc-4b13-b103-aa5cbaebf8eb&t=1549891314&pubid=7d95de69cfc7cc03c3a05b4fde9662b8&plmt=0&impid=1&cip=106.212.157.125&adv=3&pkg=1&cid=61&crid=1855&caid=3&b=284035177&c=IND&wh=320x480&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+12_1+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Mobile%2F16B91&carrier=&ct=Faridabad&st=10&z=121002&dma=&bek=4b942dfedeee2e4b394b4d8cd6cb0100_20190211_13&le=0&av=0&lae=0&userid=04E577B7-535A-48DF-BD88-D05A92FE9731&bidid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&ifa=04E577B7-535A-48DF-BD88-D05A92FE9731&ccr=1.0&m=1&act=10]]></Tracking><Tracking event=\"close\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&osrid=83d11999-c7dc-4b13-b103-aa5cbaebf8eb&t=1549891314&pubid=7d95de69cfc7cc03c3a05b4fde9662b8&plmt=0&impid=1&cip=106.212.157.125&adv=3&pkg=1&cid=61&crid=1855&caid=3&b=284035177&c=IND&wh=320x480&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+12_1+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Mobile%2F16B91&carrier=&ct=Faridabad&st=10&z=121002&dma=&bek=4b942dfedeee2e4b394b4d8cd6cb0100_20190211_13&le=0&av=0&lae=0&userid=04E577B7-535A-48DF-BD88-D05A92FE9731&bidid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&ifa=04E577B7-535A-48DF-BD88-D05A92FE9731&ccr=1.0&m=1&act=11]]></Tracking></TrackingEvents><VideoClicks><ClickThrough><![CDATA[https://www.chevrolet.com.ar]]></ClickThrough><ClickTracking><![CDATA[http://nep.advangelists.com/xp/evt?pp=hzJUnD3neNPFvVZlhIhkKFp1vrREk5dsGToz4KmEluQnsis01seCWFP6I5ZkfT9XwZeHKxbd26teDLjoF7cb0Hq2KDfgJfIRQl2iz3b0ZAJbdUFX2IixkBeTyogHq5DewNn7t8GtPR8cVOcyOolcQYuSfMUC6N1qKqraCN87Nz1QcqNttpLN41LEKh48gek4lS8UPteSdbOaTe0IDOkYazSLvECNlQfzcHJ2T4YkYD0Z4lPxCRmhOGpeXjC2eHsnRiAt2ZrCRq4VHSh3snv2PLomAA0xylJWuDKB4pommB3V6PP94vMhxv0JmmUBpoHJjDa4eU8DtRf6MsApFS7983U8RvFQyhkAl84CfTi524L41ENWrVIQRRPpBwnUDuMTv65KRR0iCkQj9V5j58AXYUjCQWpZzt2Hd2iBsgtChg6DU2tkyBBT5xsB429NTRKJNnxTGvC01k9ztseRK4kdEQ6CzmO493EugeBwdInFELWDgsbXNa89eHznHaSk7aNCpI5zhrovZ2Zothw5m11Of6liK6GjnQnq3ULwK8Zzcm8wRot4FQyIf2u6toIcnd3MLzTtIbSv2WVVhUZFDsCzMDvpVriehZ8OS3nI0MrkNYfB7HeyZWM4Gj7mLJGYJSWL8ZABjqB1QK9xahDrlMCLPqS73DkbXh6rHz3bICkWOYTtEVTjtmP0xjfQjbkmXXoRQ5kWkzx0LSPTvlSaUDc1xskF6A2o8M0TmRI6ft9MvMbORru9YUtEYAi4G5xByojkTxYqs4x9xUG9z2YV0cHmxi1fzCtgkZIAza6dd57ccL5tsNYabh3YA7jsxBdcD2QXJjKtswXSiZg9ZGbKOfYzP6c3OQcxAMYzGKyLQsIdUo9c7WDmY5i3vy9lOaVN01cuTUc1iPo89Z8Eu6NjE1xBLSbV4NyqWzV74PlUyVvSLNLdc9qT1p__]]></ClickTracking></VideoClicks><MediaFiles><MediaFile apiFramework=\"\" bitrate=\"800\" delivery=\"progressive\" height=\"480\" type=\"video/mp4\" width=\"640\"><![CDATA[https://assets.avng-cdn.com/c61/14922301371465_ConectateOnixLollaAR.mp4]]></MediaFile></MediaFiles></Linear></Creative></Creatives><Impression><![CDATA[http://nep.advangelists.com/xp/evt?srid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&osrid=83d11999-c7dc-4b13-b103-aa5cbaebf8eb&t=1549891314&pubid=7d95de69cfc7cc03c3a05b4fde9662b8&plmt=0&impid=1&cip=106.212.157.125&adv=3&pkg=1&cid=61&crid=1855&caid=3&b=284035177&c=IND&wh=320x480&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28iPhone%3B+CPU+iPhone+OS+12_1+like+Mac+OS+X%29+AppleWebKit%2F605.1.15+%28KHTML%2C+like+Gecko%29+Mobile%2F16B91&carrier=&ct=Faridabad&st=10&z=121002&dma=&bek=4b942dfedeee2e4b394b4d8cd6cb0100_20190211_13&le=0&av=0&lae=0&userid=04E577B7-535A-48DF-BD88-D05A92FE9731&bidid=90b548df-d4ac-4ff9-9af9-fcf6ce217179&ifa=04E577B7-535A-48DF-BD88-D05A92FE9731&ccr=1.0&m=1&act=5]]></Impression></InLine></Ad></VAST>');
+                done(null, '<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><VAST version=\"2.0\"><Ad id=\"13857\"><InLine><AdSystem>Programatic OpenRTB</AdSystem><AdTitle>General Vast</AdTitle><Creatives><Creative AdID=\"13857\"><Linear><Duration>00:00:23</Duration><TrackingEvents><Tracking event=\"start\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&osrid=79649fc9-abd3-497f-8f1a-f86ea1889102&t=1549991461&pubid=0cf8d6d643e13d86a5b6374148a4afac&plmt=0&impid=79649fc9-abd3-497f-8f1a-f86ea1889102&cip=106.199.82.127&adv=233&pkg=&cid=4518&crid=13857&caid=233&b=advangelists.com&c=IND&wh=1024x768&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_14_1%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F72.0.3626.96+Safari%2F537.36&carrier=&ct=New+Delhi&st=DL&z=110014&dma=&bek=40c597fd832214a4b1261f7b42b458f7_20190212_17&le=0&av=0&lae=0&userid=9fd00a52ef887a86cdc8fb377af400d62d48eb16&bidid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&ifa=&ccr=1.0&m=1&act=6]]></Tracking><Tracking event=\"start\"><![CDATA[http://nep.advangelists.com/xp/evt?pp=Lx1NUFOxiTC5myeKFsVxSRVb0bBb2Te8wd8h2cYrFu5m2QKyxB4tUQpVZDWdEEEgLBUOl25Vt7bkXCE9afu9BVMhijpCudV6RqHQtMTGr4gkzsu69osO2DvFVCPVvb259VsKAHo2fbsFUpJtbAEvPxG3uBfdsTuzsytZFi6LC9LwDzsTbZ8Gfg5Kya33ZLxWL97seCC1FxsIoW9emU9ZXGdXFWmRl2ga2quwGwet7buHEuFdHiMIr0SRocPWK7tb98Cb70Upg92J10lembOReCNxag4karvJZSFGpHGRoQOwG6cChnQmbPQf0jLQ0QHg3KPOAzirgj5L3kmhHRn8WZzSW9IuaOXUjJLC8ypYoeIUd0QlGt0hPxH6dkUiMBOhrMOSuLx2Q1tDKOdjx8CtFHB2NLDzRwuHnhNImSL3KqAzrJP0oGYhMf02IdXpnzpUtpkdQUhp6fco10geiNQpMq7p78dDif1lIpquQ8rTT5doeUH4EFCgu01PnxIsphIjqZZDn8dqiMRbbF4qYm3pHAYxEEZ90SejPSGcr3pQ8iB9aHTHoiVih2TkyiwV0GvCjGJNmVUDGINiSw0uIcGQClXQIjdVGzLIMsz8sdRlDsOnlAxDjoG7aJdkFbxgogO0xm4vTPUPzH3246VLmU3unSekjIHQP7rbzZQY54yfZi7ybzgpHhjWqTIcEIHAMiSAST2eSmzOW9fqqArxbVW5iR6XRu6zbuACn0UMpCMTuZAUgPsp0aFhulMnf34mgA4l6VgIT3gTLs2ExjgDKeGcnhyqkX3k08Cn9UPHsqzkTVlqQdidyz9jgfDevBYMI2QJRBdXvBT2Q8y2riNP3nVwI84j5e9tV96MR5lEqZ8UyqLUVuRhlQjnwf6U3n5lBspwfVTacooXeieaKj8WgbbN7SxPfjuGD0AxdOsMy14ixIuxlXjTFwJqo6D9CKzKP0iCzr7FeBJ7pqqADs6PVUeMBDedt1tQZUL01bFRYbeO2wj5FFa7ykNWv6ZrmxyuK__]]></Tracking><Tracking event=\"firstQuartile\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&osrid=79649fc9-abd3-497f-8f1a-f86ea1889102&t=1549991461&pubid=0cf8d6d643e13d86a5b6374148a4afac&plmt=0&impid=79649fc9-abd3-497f-8f1a-f86ea1889102&cip=106.199.82.127&adv=233&pkg=&cid=4518&crid=13857&caid=233&b=advangelists.com&c=IND&wh=1024x768&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_14_1%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F72.0.3626.96+Safari%2F537.36&carrier=&ct=New+Delhi&st=DL&z=110014&dma=&bek=40c597fd832214a4b1261f7b42b458f7_20190212_17&le=0&av=0&lae=0&userid=9fd00a52ef887a86cdc8fb377af400d62d48eb16&bidid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&ifa=&ccr=1.0&m=1&act=7]]></Tracking><Tracking event=\"midpoint\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&osrid=79649fc9-abd3-497f-8f1a-f86ea1889102&t=1549991461&pubid=0cf8d6d643e13d86a5b6374148a4afac&plmt=0&impid=79649fc9-abd3-497f-8f1a-f86ea1889102&cip=106.199.82.127&adv=233&pkg=&cid=4518&crid=13857&caid=233&b=advangelists.com&c=IND&wh=1024x768&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_14_1%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F72.0.3626.96+Safari%2F537.36&carrier=&ct=New+Delhi&st=DL&z=110014&dma=&bek=40c597fd832214a4b1261f7b42b458f7_20190212_17&le=0&av=0&lae=0&userid=9fd00a52ef887a86cdc8fb377af400d62d48eb16&bidid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&ifa=&ccr=1.0&m=1&act=8]]></Tracking><Tracking event=\"thirdQuartile\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&osrid=79649fc9-abd3-497f-8f1a-f86ea1889102&t=1549991461&pubid=0cf8d6d643e13d86a5b6374148a4afac&plmt=0&impid=79649fc9-abd3-497f-8f1a-f86ea1889102&cip=106.199.82.127&adv=233&pkg=&cid=4518&crid=13857&caid=233&b=advangelists.com&c=IND&wh=1024x768&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_14_1%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F72.0.3626.96+Safari%2F537.36&carrier=&ct=New+Delhi&st=DL&z=110014&dma=&bek=40c597fd832214a4b1261f7b42b458f7_20190212_17&le=0&av=0&lae=0&userid=9fd00a52ef887a86cdc8fb377af400d62d48eb16&bidid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&ifa=&ccr=1.0&m=1&act=9]]></Tracking><Tracking event=\"complete\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&osrid=79649fc9-abd3-497f-8f1a-f86ea1889102&t=1549991461&pubid=0cf8d6d643e13d86a5b6374148a4afac&plmt=0&impid=79649fc9-abd3-497f-8f1a-f86ea1889102&cip=106.199.82.127&adv=233&pkg=&cid=4518&crid=13857&caid=233&b=advangelists.com&c=IND&wh=1024x768&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_14_1%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F72.0.3626.96+Safari%2F537.36&carrier=&ct=New+Delhi&st=DL&z=110014&dma=&bek=40c597fd832214a4b1261f7b42b458f7_20190212_17&le=0&av=0&lae=0&userid=9fd00a52ef887a86cdc8fb377af400d62d48eb16&bidid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&ifa=&ccr=1.0&m=1&act=10]]></Tracking><Tracking event=\"close\"><![CDATA[http://nep.advangelists.com/xp/evt?srid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&osrid=79649fc9-abd3-497f-8f1a-f86ea1889102&t=1549991461&pubid=0cf8d6d643e13d86a5b6374148a4afac&plmt=0&impid=79649fc9-abd3-497f-8f1a-f86ea1889102&cip=106.199.82.127&adv=233&pkg=&cid=4518&crid=13857&caid=233&b=advangelists.com&c=IND&wh=1024x768&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_14_1%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F72.0.3626.96+Safari%2F537.36&carrier=&ct=New+Delhi&st=DL&z=110014&dma=&bek=40c597fd832214a4b1261f7b42b458f7_20190212_17&le=0&av=0&lae=0&userid=9fd00a52ef887a86cdc8fb377af400d62d48eb16&bidid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&ifa=&ccr=1.0&m=1&act=11]]></Tracking></TrackingEvents><VideoClicks><ClickThrough><![CDATA[https://modabahrain.com]]></ClickThrough><ClickTracking><![CDATA[http://nep.advangelists.com/xp/evt?pp=AS0CW5ZUh94TSFnJOOKXiCQMAlh1eEfxhYocvfUbbdataY7azNQCJew6EYgaX9rmdt33BFhlLazwd3GZTQebTvx7GhHoydMORmH9Pe32HUBuNIDkMsdsYvEsKdgW9QjBBwjpnze4gsFlXJqLFRWcDFrsZnf4nwIbJNJTEbv8uLvNO11IXFlI5uaD1ivkOPf0BuC8Zfr4Nbt1grPyiiD7jCA1z9E5R4W7RGvS2v3UMuGEBbSl1YYQlPcR4xtUGIfVko6UPtOBL7SlNnnwRlXnwS7scQBr1isrKGVJWWHVjxkHawM5K1RnPYbDkdxxYZGNnCvDlZIeQGr1wNNJS5LHh47iMNdul5j4kyldIrAsVP6npeqrckbPMAlLcWXZUXVDKklbvSwjgu8a2AYbPfXC1rxyOzo9osCDIhbqr8g7KCmtlMVJg1Zu6OykuVBxYtvUcSk6HnK2JSMAK5lhsJzqf5OUeJDmZIFUv9H3X84EJBcDdzYc7Hp07rd1FwiKf28euLn4htxLOdXD6QVQFiO1YYSFWTLo6ytZxj7TKC4yCR0EFKJinsfnSftVBKajWGzhdo0ONGlR5ptqlPz8KY49vRqmBDWyRxIpBcZSRfSeyRpM68dlZeCHCi8iqsiLIvbxpn8FSWy1I8cT9KnnlGvhFYrWRjzvgJO9GIj3xI4QKhCNP97ducHl6LeDliuzJvCE8blM69aOdDaveTwCk5mueND4CS5JX2IRhT2A1LdzPFQ5C88hCctpfgsGm4pR3nNmhbUzoxCeL8cWQo5hTvGpjj8DAQoyB41Cn0e5U3iz6ynz8KhUqvsZyfDaYMtUsSWzIBBra7dybSOO1IlBSyPs9PujVwjioxLPe2gFzAWbCAz1eYfsQanJSz1hnNuhFRxKm0LCAIartsG83JR5Vlw8H3NsInxz0wm6nvqMc5lYWzpaa1iZpVawzLJNQtpskkzm6suYxtcCwgjsGrdpxVLKYBOhOp0KO4RPzM8AQvoykiZiI1IzMlxWH__]]></ClickTracking></VideoClicks><MediaFiles><MediaFile apiFramework=\"\" bitrate=\"800\" delivery=\"progressive\" height=\"1080\" type=\"video/mp4\" width=\"1920\"><![CDATA[https://assets.avng-cdn.com/c4511/15488600359371_1920x1080_ar_final.mp4]]></MediaFile></MediaFiles></Linear></Creative></Creatives><Impression><![CDATA[http://nep.advangelists.com/xp/evt?srid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&osrid=79649fc9-abd3-497f-8f1a-f86ea1889102&t=1549991461&pubid=0cf8d6d643e13d86a5b6374148a4afac&plmt=0&impid=79649fc9-abd3-497f-8f1a-f86ea1889102&cip=106.199.82.127&adv=233&pkg=&cid=4518&crid=13857&caid=233&b=advangelists.com&c=IND&wh=1024x768&zoneid=&dealid=&dspid=3&imptype=video&ua=Mozilla%2F5.0+%28Macintosh%3B+Intel+Mac+OS+X+10_14_1%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F72.0.3626.96+Safari%2F537.36&carrier=&ct=New+Delhi&st=DL&z=110014&dma=&bek=40c597fd832214a4b1261f7b42b458f7_20190212_17&le=0&av=0&lae=0&userid=9fd00a52ef887a86cdc8fb377af400d62d48eb16&bidid=ee8a5e5e-a6fc-4a21-9022-bcf6adc024de&ifa=&ccr=1.0&m=1&act=5]]></Impression></InLine></Ad></VAST>');
+            }, 0);
+          };
+
+        player = videojs(videoEl, adPluginOpts);
+
+        function muteAd() {
+            console.log(mute);
+            if (mute == false) {
+            console.log('muted');
+            player.vast.adUnit.muteAd();
+            fireEvent("mute");
+            // showPauseBtn();
+            }else{
+            console.log('unmuted');
+            player.vast.adUnit.unmuteAd();
+            fireEvent("unmute");
+        }
+    }
+
+        if(player) {
+
+          player.on('vast.firstQuartile', function(evt) {
+              if(adStarted){
+                videojs.log("vpaid.firstQuartile");
+                // muteAd();
+              }
+            
+          });
+        
+          player.on('vast.midpoint', function(evt) {
+            if(adStarted){
+                fireEvent("midPoint");
+                // muteAd();
+            }
+          });
+        
+          player.on('vast.thirdQuartile', function(evt) {
+            if(adStarted){
+                fireEvent("thirdQuartile");
+            }
+          });
+        
+          player.on('vast.complete', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.complete");
+                adStarted = false;
+            }
+          });
+
+          player.on('vast.adEnd', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.adEnd");
+            }
+          });
+
+          player.on('vast.AdImpression', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.AdImpression");
+            }
+          });
+
+          player.on('play', function(evt) {
+            if(adStarted){
+                videojs.log("play");
+            }
+          });
+
+          player.on('pause', function(evt) {
+            if(adStarted){
+                videojs.log("pause");
+            }
+          });
+          player.on('vast.clickThrough', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.clickThrough");
+            }
+          });
+          player.on('volumechange', function(evt) {
+            if(adStarted){
+                mute = !mute;
+                fireEvent("volumeChanged");
+            }
+          });
+          player.on('vast.AdStopped', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.AdStopped");
+            }
+          });
+          player.on('vast.reset', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.reset");
+            }
+          });
+          player.on('vast.adsCancel', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.adsCancel");
+                adStarted = false;
+            }
+          });
+          player.on('vast.adSkip', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.adSkip");
+            }
+          });
+          player.on('vast.adStart', function(evt) {
+            // muteAd();
+            if(adStarted){
+                videojs.log("vpaid.adStart");
+            }
+          });
+          player.on('vast.resumeAd', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.resumeAd");
+            }
+          });
+          player.on('vast.pauseAd', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.pauseAd");
+            }
+          });
+          player.on('vast.AdSkipped', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.AdSkipped");
+            }
+          });
+          player.on('vast.AdStarted', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.AdStarted");
+            }
+          });
+          player.on('vast.AdVideoStart', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.AdVideoStart");
+            }
+          });
+          player.on('playing', function(evt) {
+            if(adStarted){
+                videojs.log("playing");
+            }
+            
+          });
+          player.on('vast.AdPaused', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.AdPaused");
+            }
+          });
+          player.on('vast.AdUserAcceptInvitation', function(evt) {
+            if(adStarted){
+                videojs.log("vpaid.AdUserAcceptInvitation");
+            }
+          });
+          player.on('vast.AdUserClose', function(evt) {
+            if(adStarted){
+                fireEvent("close");
+                adStarted = false;
+            }
+          });
+
+
+
+          player.on('vast.adStart', function(evt) {
+            adStarted = true;
+            var clickThroughUrl = player.clickUrl;
+            console.log(player.clickUrl+'here');
+            fireEvent("started?clickthroughurl="+encodeURIComponent(clickThroughUrl));
+            // player.on('play', showPauseBtn);
+            // player.on('pause', showResumeBtn);
+            player.one('vast.adEnd', function() {
+              // pauseBtn.style.display = 'none';
+              // resumeBtn.style.display = 'none';
+
+              // player.off('play', showPauseBtn);
+              // player.off('pause', showResumeBtn);
+            });
+          });
+
+          function fireEvent(event){
+            console.log(event);
+            window.location = 'imaadv://' + event;
+        }
+        }
+      });
+      function activeMode() {
+      // if (tagTypeEl.checked) {
+      //   return 'TAG';
+      // }
+
+      // if (xmlTypeEl.checked) {
+      //   return 'XML';
+      // }
+
+      return 'CUSTOM';
+    }
+
+    function createVideoEl(container, cb) {
+      var videoTag = '<video class="video-js vjs-default-skin" id="contentElement"  preload="auto" autoplay muted>' +
+        '<source src="http://avng-sp-q1media.s3.amazonaws.com/vslider/blank.mp4" type="video/mp4"/>' +
+        '<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that ' +
+        '<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>' +
+        '</p>' +
+        '</video>';
+      container.innerHTML = videoTag;
+
+      //We do this asynchronously to give time for the dom to be updated
+      setTimeout(function() {
+        var videoEl = container.querySelector('.video-js');
+        cb(videoEl);
+      }, 0);
+    }
+ 
+}
+}
+    }
     </script>
 
     <!-- VideoJs required scripts-->
@@ -41,74 +314,9 @@
 
 </head>
 <body>
-    <h3 class="title main">videojs-vast-vpaid plugin </h3>
-    <div class="container">
-        <div class="row">
-            <h4>VideoJs <%=version%> Demo</h4>
-            <div class="twelve columns">
-                <div class="vast-container">
-                    <form id="vast-vpaid-form">
-                        <div class="row">
-                            <div class="one-third column">
-                                <input type="radio" name="vast-type" class="tag-type-radio" id="vast-tag-radio">
-                                <label for="vast-tag-radio">VAST/VPAID tag</label>
-                            </div>
-                            <div class="one-third column">
-                                <input type="radio" name="vast-type" class="xml-type-radio" checked="checked" id="vast-sample-radio">
-                                <label for="vast-sample-radio">VAST/VPAID sample tags</label>
-                            </div>
-                            <div class="one-third column">
-                                <input type="radio" name="vast-type" class="custom-type-radio" id="vast-custom-radio">
-                                <label for="vast-custom-radio">VAST/VPAID custom XML</label>
-                            </div>
-                        </div>
-                        <div class="row tag-type">
-                            <div class="twelve columns">
-                                <label for="vast-tag">VAST Tag</label>
-                                <input id="vast-tag" type="text" name="vast-type" class="u-full-width tag-el">
-                            </div>
-                        </div>
-                        <div class="row xml-type">
-                            <div class="twelve columns">
-                                <label for="vast-samples">VAST/VPAID sample tags</label>
-                                <select id="vast-samples" class="u-full-width xml-el">
-                                    <% demoAds.forEach( function ( demoAd, index ) { %>
-                                    <option <% if(index===0) {%>selected="selected"<% } %> value="<%= demoAd.url %>"><%= demoAd.label %></option>
-                                    <% }); %>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row custom-type">
-                            <div class="twelve columns">
-                                <textarea class="u-full-width custom-el" placeholder="Sample VAST XMl"></textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="twelve columns">
-                                <a class="button button-primary" href="#">Update</a>
-                                <a class="button button-info pause" style="display:none;" href="#">Pause Ad</a>
-                                <a class="button button-info resume" style="display:none;" href="#">Resume Ad</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="twelve columns">
-                                <div class="vjs-video-container">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            Some ad's will throw "VAST Error: on VASTClient.requestVastXML, HTTP request error with status '-1'", because that adServer is not setting the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">http access control header</a>, the reason why some video player's are able to play the ad's in firefox because they do the request by flash bypassing the browser
-        </div>
-        <br/>
-        <div class="row">
-            <h4> Other Versions </h4>
-            <% otherVersions.forEach( function ( ov ) { %>
-                <p><a href='index_<%=ov%>.html'>Video.Js <%=ov%> DEMO</a></p>
-            <% }); %>
-        </div>
-    </div>
+        <div id="mainContainer">
+            <div class="vjs-video-container" id="adContainer"></div>
+        <div id=""></div>
 </body>
 
 </html>
