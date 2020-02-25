@@ -84,6 +84,8 @@ VASTTracker.prototype.trackProgress = function trackProgress(newProgressInMs) {
   var trackingEvents = this.response.trackingEvents;
 
   if (utilities.isNumber(newProgressInMs)) {
+    this.player.cDuration = newProgressInMs;
+    this.player.trigger("vast."+'progressChanged');
     addTrackEvent('start', ONCE, newProgressInMs > 0);
     addTrackEvent('rewind', ALWAYS, hasRewound(this.progress, newProgressInMs));
     addQuartileEvents(newProgressInMs);
@@ -112,7 +114,7 @@ VASTTracker.prototype.trackProgress = function trackProgress(newProgressInMs) {
     var firstQuartile = that.quartiles.firstQuartile;
     var midpoint = that.quartiles.midpoint;
     var thirdQuartile = that.quartiles.thirdQuartile;
-
+    // console.log(progress);
     if (!firstQuartile.tracked) {
       trackQuartile('firstQuartile', progress);
     } else if (!midpoint.tracked) {

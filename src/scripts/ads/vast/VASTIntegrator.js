@@ -285,8 +285,9 @@ VASTIntegrator.prototype._addClickThrough = function addClickThrough(mediaFile, 
         }
         return false;
       }
-
-      player.pause();
+      e.preventDefault();
+      e.stopPropagation();
+      // player.pause();
       tracker.trackClick();
     };
 
